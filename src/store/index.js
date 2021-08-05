@@ -30,11 +30,22 @@ export default createStore({
   mutations: {
     addDataMutation(state, data){
       state.data.push(data)
+    },
+    setDataMutation(state, data){
+      state.data = data
     }
   },
   actions: {
-    addDataAction ({commit}, data) {
+    addDataAction ({commit, dispatch}, data) {
       commit('addDataMutation', data)
+      dispatch('saveLocalStorage')
+    },
+    saveLocalStorage ({state}) {
+      localStorage.setItem('data',btoa(JSON.stringify(state.data)))
+    },
+    loadDataLocalStorage({commit, state}){
+      const data = JSON.parse(atob(localStorage.getItem('data')))
+      commit('setDataMutation', data)
     }
   },
   modules: {

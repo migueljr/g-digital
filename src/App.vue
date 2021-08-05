@@ -50,3 +50,18 @@ body{
 
 
 </style>
+
+<script>
+  import {onMounted} from "vue";
+  import {useStore} from "vuex";
+
+  export default {
+    setup(){
+      const store = useStore();
+      onMounted(()=>{
+        if(localStorage.getItem('data'))
+          store.dispatch('loadDataLocalStorage')
+      })
+    }
+  }
+</script>
